@@ -10,14 +10,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-
 public class CastleService {
     private final CastleRepository castleRepository;
 
     public CastleService(CastleRepository castleRepository) {
         this.castleRepository = castleRepository;
     }
-    public InlineKeyboardMarkup getCastlesButtons(){
+
+    public InlineKeyboardMarkup getCastlesButtons() {
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
         Iterable<CastleDAO> castleDAOS = castleRepository.findAll();
         castleDAOS.forEach(castleDAO -> {
@@ -25,7 +25,22 @@ public class CastleService {
             button.setText(castleDAO.getName());
             buttonList.add(button);
         });
+
         InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
-        keyboardMarkup.setKeyboard();
+
+        List<List<InlineKeyboardButton>> table = new ArrayList<>();
+        List<InlineKeyboardButton> row = new ArrayList<>();
+
+        buttonList.forEach(button -> {
+            if (row.size() < 3) {
+                row.add(button);
+            } else {
+                List<InlineKeyboardButton> newRow = new ArrayList<>(row);
+                table.add(newRow);
+                row.clear();
+            }
+        });
+
+        return keyboardMarkup;
     }
 }
