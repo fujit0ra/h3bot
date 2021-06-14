@@ -5,15 +5,25 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+import ru.home.h3bot.services.CastleService;
+import ru.home.h3bot.services.UnitService;
 
 @Component
 public class HotaHandler extends TelegramLongPollingBot {
+    private final UnitService unitService;
+    private final CastleService castleService;
 
     @Value("${telegram-connection.token}")
     private String token;
     @Value("${telegram-connection.username}")
     private String username;
+
+    public HotaHandler(UnitService unitService, CastleService castleService) {
+        this.unitService = unitService;
+        this.castleService = castleService;
+    }
 
     @Override
     public String getBotUsername() {
@@ -30,14 +40,18 @@ public class HotaHandler extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
+            InlineKeyboardMarkup castlesButtons = castleService.getCastlesButtons();
+            message.setReplyMarkup(castlesButtons);
             message.setChatId(update.getMessage().getChatId().toString());
-            message.setText(update.getMessage().getText());
+            message.setText("Выберите замок");
 
             try {
                 execute(message); // Call method to send the message
             } catch (TelegramApiException e) {
                 e.printStackTrace();
             }
+        } else if (update.hasCallbackQuery()) {
+            System.out.println(update);
         }
 
     }

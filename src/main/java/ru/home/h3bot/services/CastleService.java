@@ -22,6 +22,7 @@ public class CastleService {
         Iterable<CastleDAO> castleDAOS = castleRepository.findAll();
         castleDAOS.forEach(castleDAO -> {
             InlineKeyboardButton button = new InlineKeyboardButton();
+            button.setCallbackData("Вы выбрали " + castleDAO.getName());
             button.setText(castleDAO.getName());
             buttonList.add(button);
         });
@@ -40,7 +41,7 @@ public class CastleService {
                 row.clear();
             }
         });
-
+        keyboardMarkup.setKeyboard(table);
         return keyboardMarkup;
     }
 }
