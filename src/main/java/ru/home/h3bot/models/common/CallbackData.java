@@ -5,13 +5,16 @@ import java.util.Map;
 
 /**
  * Сущность ответа на нажатие кновпки.
- *
- * @author PAnisimov on 15.06.2021
  */
 public class CallbackData {
 
     public CallbackData(int step) {
         this.step = step;
+    }
+
+    public CallbackData(int step, Map<String, Object> data) {
+        this.step = step;
+        this.data = data;
     }
 
     /**

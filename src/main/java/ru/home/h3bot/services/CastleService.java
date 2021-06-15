@@ -76,15 +76,14 @@ public class CastleService {
      */
     private String getCastlesCallbackData(int step, CastleDAO castleDAO) {
         try {
-            if (step == 1) {
-                CallbackData callbackData = new CallbackData(step);
-                //Формируем ответ для первого шага
-                Map<String, Object> data = new HashMap<>();
-                data.put("castleId", castleDAO.getId());
-                callbackData.setData(data);
-                //Преобразовываем CallbackData в JSON для ответа
-                return objectMapper.writeValueAsString(callbackData);
-            }
+            CallbackData callbackData = new CallbackData(step + 1);
+            //Формируем ответ для первого шага
+            Map<String, Object> data = new HashMap<>();
+            data.put("castleId", castleDAO.getId());
+            callbackData.setData(data);
+            //Преобразовываем CallbackData в JSON для ответа
+            return objectMapper.writeValueAsString(callbackData);
+
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
