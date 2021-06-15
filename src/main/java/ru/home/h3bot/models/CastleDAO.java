@@ -5,12 +5,28 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import java.util.Set;
+
+/**
+ * DAO сущность замка.
+ */
 @Entity
-@Table(name="CASTLES")
+@Table(name = "CASTLES")
 public class CastleDAO {
+
+    /**
+     * Идентификатор.
+     */
     @Id
     private int id;
+
+    /**
+     * Имя.
+     */
     private String name;
+
+    /**
+     * Юниты замка.
+     */
     @OneToMany(mappedBy = "castle")
     private Set<UnitDAO> units;
 

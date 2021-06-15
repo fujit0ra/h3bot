@@ -1,10 +1,11 @@
-package ru.home.h3bot;
+package ru.home.h3bot.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.telegram.telegrambots.meta.TelegramBotsApi;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import org.telegram.telegrambots.updatesreceivers.DefaultBotSession;
+import ru.home.h3bot.HotaHandler;
 
 @Configuration
 

@@ -10,13 +10,18 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 import ru.home.h3bot.services.CastleService;
 import ru.home.h3bot.services.UnitService;
 
+/**
+ * Оброботчик команд от Hota-бота.
+ */
 @Component
 public class HotaHandler extends TelegramLongPollingBot {
+
     private final UnitService unitService;
     private final CastleService castleService;
 
     @Value("${telegram-connection.token}")
     private String token;
+
     @Value("${telegram-connection.username}")
     private String username;
 
@@ -32,7 +37,6 @@ public class HotaHandler extends TelegramLongPollingBot {
 
     @Override
     public String getBotToken() {
-        // TODO
         return token;
     }
 

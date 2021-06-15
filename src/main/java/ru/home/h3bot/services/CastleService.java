@@ -9,6 +9,9 @@ import ru.home.h3bot.repository.CastleRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис по раблоте с замками.
+ */
 @Service
 public class CastleService {
     private final CastleRepository castleRepository;
@@ -17,6 +20,11 @@ public class CastleService {
         this.castleRepository = castleRepository;
     }
 
+    /**
+     * Получить кнопки telegram-бота со всеми замками.
+     *
+     * @return {@link InlineKeyboardMarkup} - кнопки telegram-бота со всеми замками
+     */
     public InlineKeyboardMarkup getCastlesButtons() {
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
         Iterable<CastleDAO> castleDAOS = castleRepository.findAll();
@@ -41,6 +49,9 @@ public class CastleService {
                 row.clear();
             }
         });
+        if(!row.isEmpty()){
+            table.add(row);
+        }
         keyboardMarkup.setKeyboard(table);
         return keyboardMarkup;
     }

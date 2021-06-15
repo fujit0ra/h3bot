@@ -1,6 +1,7 @@
 telegram-connection:
   username: Fortress
   token: 1892155466:AAFkU1CP8Iyh9xQJ5xghieGk7xI9nzmbALI
+
 spring:
   datasource:
     url: jdbc:h2:file:./data/demo

@@ -2,17 +2,34 @@ package ru.home.h3bot.models;
 
 import javax.persistence.*;
 
+/**
+ * DAO сущность юнитоа.
+ */
 @Entity
 @Table(name = "UNITS")
 public class UnitDAO {
+
+    /**
+     * Идентификатор.
+     */
     @Id
     private int id;
+
+    /**
+     * Имя.
+     */
     private String name;
+
     private int attack;
+
     private int defense;
+
     private int minDamage;
+
     private int maxDamage;
+
     private int hp;
+
     @ManyToOne
     @JoinColumn(name = "castle_id", nullable = false)
     private CastleDAO castle;

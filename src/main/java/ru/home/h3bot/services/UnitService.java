@@ -10,8 +10,10 @@ import ru.home.h3bot.repository.UnitRepository;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Сервис по работе с юнитами.
+ */
 @Service
-
 public class UnitService {
     private final UnitRepository unitRepository;
 
@@ -19,6 +21,11 @@ public class UnitService {
         this.unitRepository = unitRepository;
     }
 
+    /**
+     * Получить кнопки telegram-бота со всеми юнитами.
+     *
+     * @return {@link InlineKeyboardMarkup} - кнопки telegram-бота со всеми юнитами
+     */
     public InlineKeyboardMarkup getUnitsButtons() {
         List<InlineKeyboardButton> buttonList = new ArrayList<>();
         Iterable<UnitDAO> castleDAOS = unitRepository.findAll();
@@ -42,7 +49,10 @@ public class UnitService {
                 row.clear();
             }
         });
-
+        if(!row.isEmpty()){
+            table.add(row);
+        }
+        keyboardMarkup.setKeyboard(table);
         return keyboardMarkup;
     }
 }
