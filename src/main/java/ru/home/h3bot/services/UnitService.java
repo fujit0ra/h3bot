@@ -3,7 +3,7 @@ package ru.home.h3bot.services;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ru.home.h3bot.models.UnitDAO;
+import ru.home.h3bot.models.dao.UnitDAO;
 import ru.home.h3bot.repository.UnitRepository;
 
 import java.util.ArrayList;
@@ -30,6 +30,7 @@ public class UnitService {
         Iterable<UnitDAO> castleDAOS = unitRepository.findAll();
         castleDAOS.forEach(unitDAO -> {
             InlineKeyboardButton button = new InlineKeyboardButton();
+            button.setCallbackData("Вы выбрали " + unitDAO.getName());
             button.setText(unitDAO.getName());
             buttonList.add(button);
         });

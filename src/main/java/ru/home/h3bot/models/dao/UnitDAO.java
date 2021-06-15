@@ -1,13 +1,16 @@
-package ru.home.h3bot.models;
+package ru.home.h3bot.models.dao;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * DAO сущность юнитоа.
  */
 @Entity
 @Table(name = "UNITS")
-public class UnitDAO {
+public class UnitDAO implements Serializable {
 
     /**
      * Идентификатор.
@@ -20,16 +23,40 @@ public class UnitDAO {
      */
     private String name;
 
+    /**
+     * Атака.
+     */
+    @JsonIgnore
     private int attack;
 
+    /**
+     * Защита.
+     */
+    @JsonIgnore
     private int defense;
 
+    /**
+     * Минимальный урон.
+     */
+    @JsonIgnore
     private int minDamage;
 
+    /**
+     * Максимальный урон.
+     */
+    @JsonIgnore
     private int maxDamage;
 
+    /**
+     * Здоровье.
+     */
+    @JsonIgnore
     private int hp;
 
+    /**
+     * Замок которому принадлежит юнит.
+     */
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "castle_id", nullable = false)
     private CastleDAO castle;

@@ -1,9 +1,9 @@
-package ru.home.h3bot.models;
+package ru.home.h3bot.models.dao;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Set;
 
 /**
@@ -11,7 +11,7 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "CASTLES")
-public class CastleDAO {
+public class CastleDAO implements Serializable {
 
     /**
      * Идентификатор.
@@ -27,7 +27,8 @@ public class CastleDAO {
     /**
      * Юниты замка.
      */
-    @OneToMany(mappedBy = "castle")
+    @JsonIgnore
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "castle")
     private Set<UnitDAO> units;
 
     public int getId() {

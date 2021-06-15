@@ -44,7 +44,7 @@ public class HotaHandler extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
-            InlineKeyboardMarkup castlesButtons = castleService.getCastlesButtons();
+            InlineKeyboardMarkup castlesButtons = castleService.getCastlesButtons(1);
             message.setReplyMarkup(castlesButtons);
             message.setChatId(update.getMessage().getChatId().toString());
             message.setText("Выберите замок");
