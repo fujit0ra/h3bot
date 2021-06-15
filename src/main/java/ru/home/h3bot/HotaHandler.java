@@ -43,20 +43,23 @@ public class HotaHandler extends TelegramLongPollingBot {
     @Override
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
-            SendMessage message = new SendMessage(); // Create a SendMessage object with mandatory fields
             InlineKeyboardMarkup castlesButtons = castleService.getCastlesButtons(1);
-            message.setReplyMarkup(castlesButtons);
-            message.setChatId(update.getMessage().getChatId().toString());
-            message.setText("Выберите замок");
-
-            try {
-                execute(message); // Call method to send the message
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
-            }
+            sendMessage(castlesButtons, update.getMessage().getChatId().toString(), "Выберите замок" );
         } else if (update.hasCallbackQuery()) {
             System.out.println(update);
         }
 
+    }
+    public void sendMessage(InlineKeyboardMarkup buttons, String chatId, String text) {
+        SendMessage message = new SendMessage();
+        message.setReplyMarkup(buttons);
+        message.setChatId(chatId);
+        message.setText(text);
+
+        try {
+            execute(message); // Call method to send the message
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
+        }
     }
 }
