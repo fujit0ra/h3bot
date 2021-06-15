@@ -3,7 +3,6 @@ package ru.home.h3bot.services;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
-import ru.home.h3bot.models.CastleDAO;
 import ru.home.h3bot.models.UnitDAO;
 import ru.home.h3bot.repository.UnitRepository;
 
@@ -41,15 +40,14 @@ public class UnitService {
         List<InlineKeyboardButton> row = new ArrayList<>();
 
         buttonList.forEach(button -> {
-            if (row.size() < 3) {
-                row.add(button);
-            } else {
+            if (row.size() == 3) {
                 List<InlineKeyboardButton> newRow = new ArrayList<>(row);
                 table.add(newRow);
                 row.clear();
             }
+            row.add(button);
         });
-        if(!row.isEmpty()){
+        if (!row.isEmpty()) {
             table.add(row);
         }
         keyboardMarkup.setKeyboard(table);

@@ -41,15 +41,14 @@ public class CastleService {
         List<InlineKeyboardButton> row = new ArrayList<>();
 
         buttonList.forEach(button -> {
-            if (row.size() < 3) {
-                row.add(button);
-            } else {
+            if (row.size() == 3) {
                 List<InlineKeyboardButton> newRow = new ArrayList<>(row);
                 table.add(newRow);
                 row.clear();
             }
+            row.add(button);
         });
-        if(!row.isEmpty()){
+        if (!row.isEmpty()) {
             table.add(row);
         }
         keyboardMarkup.setKeyboard(table);
