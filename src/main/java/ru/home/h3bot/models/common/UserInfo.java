@@ -4,9 +4,6 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import ru.home.h3bot.models.dao.CastleDAO;
 import ru.home.h3bot.models.dao.UnitDAO;
 
-/**
- * @author PAnisimov on 16.06.2021
- */
 public class UserInfo {
 
     public UserInfo(User user) {

@@ -10,8 +10,6 @@ import java.util.Map;
 
 /**
  * Сервис по работе с пользлователями.
- *
- * @author PAnisimov on 16.06.2021
  */
 @Service
 public class UserService {
