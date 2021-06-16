@@ -76,40 +76,67 @@ public class UnitService {
             int countUnit1 = userInfo.getCountFirstUnit();
             int countUnit2 = userInfo.getCountSecondUnit();
 
-            float totalDamage = 0f;
+            String stackName1 = unit1.getName() + "(" + countUnit1 + ")";
+            String stackName2 = unit2.getName() + "(" + countUnit2 + ")";
 
-            float baseDamage = randFloat(unit1.getMinDamage(), unit1.getMaxDamage());
-            log.info("Базовый урон 1 создания (baseDamage):", baseDamage);
+            float totalDamage1 = 0f;
+
+            float baseDamage1 = randFloat(unit1.getMinDamage(), unit1.getMaxDamage());
+            log.info("Базовый урон " + stackName1 + " (baseDamage):", baseDamage1);
 
             if (unit1.getAttack() > unit2.getDefense()) {
                 log.info("Атака атакующего стека {} = {} > защиты атакуемого {} = {}",
                         unit1.getName(), unit1.getAttack(), unit2.getName(), unit2.getDefense());
 
-                totalDamage = baseDamage * countUnit1 * (1 + (unit1.getAttack() - unit2.getDefense()) * 0.05f);
+                totalDamage1 = baseDamage1 * countUnit1 * (1 + (unit1.getAttack() - unit2.getDefense()) * 0.05f);
             } else {
                 log.info("Атака атакующего стека {} = {} < защиты атакуемого {} = {}",
                         unit1.getName(), unit1.getAttack(), unit2.getName(), unit2.getDefense());
 
-                totalDamage = baseDamage * countUnit1 / (1 + (unit2.getDefense() - unit1.getAttack()) * 0.05f);
+                totalDamage1 = baseDamage1 * countUnit1 / (1 + (unit2.getDefense() - unit1.getAttack()) * 0.05f);
             }
 
             float unit1stackHP = unit1.getHp() * countUnit1;
 
             float unit2stackHP = unit2.getHp() * countUnit2;
 
-            int deathCountUnit2 = (int) (totalDamage / unit2.getHp());
+            int deathCountUnit2 = (int) (totalDamage1 / unit2.getHp());
 
-            String stackName1 = unit1.getName() + "(" + countUnit1 + ")";
-            String stackName2 = unit2.getName() + "(" + countUnit2 + ")";
+            //Получаем количество оставшихся существ после смерти
+            countUnit2 = countUnit2 - deathCountUnit2;
+
+            float totalDamage2 = 0f;
+            int deathCountUnit1 = 0;
+
+            if (countUnit2 > 0) {
+                float baseDamage2 = randFloat(unit2.getMinDamage(), unit2.getMaxDamage());
+                log.info("Базовый урон " + stackName1 + " (baseDamage):", baseDamage1);
+                if (unit2.getAttack() > unit1.getDefense()) {
+                    log.info("Атака атакующего стека {} = {} > защиты атакуемого {} = {}",
+                            unit2.getName(), unit1.getAttack(), unit1.getName(), unit1.getDefense());
+
+                    totalDamage2 = baseDamage2 * countUnit2 * (1 + (unit2.getAttack() - unit1.getDefense()) * 0.05f);
+                } else {
+                    log.info("Атака атакующего стека {} = {} < защиты атакуемого {} = {}",
+                            unit2.getName(), unit2.getAttack(), unit1.getName(), unit1.getDefense());
+
+                    totalDamage2 = baseDamage2 * countUnit2 / (1 + (unit1.getDefense() - unit2.getAttack()) * 0.05f);
+                }
+                deathCountUnit1 = (int) (totalDamage2 / unit1.getHp());
+            }
+
 
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder
                     .append("Атакующий стек: " + stackName1)
                     .append("\n  Общее здоровье стека: " + unit1stackHP)
-                    .append("\n  Итоговый нанесенный урон по " + stackName2 + ": " + totalDamage)
+                    .append("\n  Итоговый нанесенный урон по " + stackName2 + ": " + totalDamage1)
+                    .append("\n  Итоговый полученный урон от " + stackName2 + ": " + totalDamage2)
+                    .append("\n  Умрет существ: " + deathCountUnit1)
                     .append("\n\nАтакуемый стек: " + stackName2)
                     .append("\n  Общее здоровье стека: " + unit2stackHP)
-                    .append("\n  Итоговый полученный урон от " + stackName1 + ": " + totalDamage)
+                    .append("\n  Итоговый полученный урон от " + stackName1 + ": " + totalDamage1)
+                    .append("\n  Итоговый нанесенный урон по " + stackName1 + ": " + totalDamage2)
                     .append("\n  Умрет существ: " + deathCountUnit2)
                     .append("\n\nРассчитать заного: /start");
             return stringBuilder.toString();

@@ -181,7 +181,7 @@ public class HotaHandler extends TelegramLongPollingBot {
                             if (callbackData.getData() != null && callbackData.getData().containsKey("unitId")) {
                                 int unitId = (int) callbackData.getData().get("unitId");
                                 log.info("Получени идентификатор атакующего существа: {}", unitId);
-                                sendMessage(null, chatId, "Введите количество атакующих существ");
+                                sendMessage(null, chatId, "Введите количество атакуемых существ");
 
                                 userInfo.setActiveStep(callbackData.getStep() + 1);
                                 if (unitRepository.findById(unitId).isPresent()) {
